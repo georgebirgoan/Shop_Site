@@ -10,19 +10,12 @@ const Store=()=>{
     console.log("produse store ",products);
     return(
     <div className={Styles.container} >
-
     {
         products.map((item)=>(
         <Product key={item.id} productData={item} />
         ))
     }
-
-
     </div>
-
-
-
-    
     );
 }
 

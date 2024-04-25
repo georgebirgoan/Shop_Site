@@ -1,7 +1,8 @@
 //aici se creeaza fiecare produs pt cumparaturi
 import React,{ useContext } from 'react';
 import Styles from '../style/Product.module.css'
-import {Link, Rating} from '@mui/material';
+import { Link } from 'react-router-dom';
+import {Rating} from '@mui/material';
 import { CartContext } from '../../context/CartContextProvider';
 import { isInCart, itemCount } from '../../helper/functions';
 import trash from '../../assets/icons/trash.png'
@@ -15,8 +16,7 @@ const Product=({productData})=>{
     const {id,title,price,category,image,rating}=productData; //destracture info from each product
     const {rate}=rating;
     const {state,dispatch}=useContext(CartContext);
-    console.log(state);
-
+    console.log("items counter in product",state.itemsCounter);
 
     return(
         <div className={Styles.container}>
@@ -37,7 +37,7 @@ const Product=({productData})=>{
         
          {/*Details and add to cart */}
         <div className={Styles.linkContainer}>
-        <Link to={`/products/${category}/${id}`}>Details</Link>
+            <Link to={`/products/${category}/${id}`}>Details</Link>
 
     
     <div className={Styles.buttonContainer}>

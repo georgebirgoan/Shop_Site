@@ -1,3 +1,15 @@
+export const shorten = (title) => {
+    const splitedTitle = title.split(" ");
+    if (splitedTitle[1] === "-") {
+      return `${splitedTitle[0]} ${splitedTitle[2]}`;
+    } else {
+      return `${splitedTitle[0]} ${splitedTitle[1]}`;
+    }
+  };
+
+
+
+
 //!! este numit operator de dublă negare sau de conversie la valoare booleană.
 
 export const isInCart = (state,id)=>{
@@ -8,9 +20,10 @@ export const isInCart = (state,id)=>{
 
 
 
-//numara produse cos pt a stabili starea produsului,daca se gasesc returneaza cantitatea
+//nr de produse in cos la  starea curenta,daca se gasesc returneaza cantitatea
 export const itemCount=(state,id)=>{
-    const index=state.selectedItem.findIndex((item)=> item.id === id);
+    const index=state.selectedItem.findIndex((item)=>
+     item.id === id);
 
     if(index === -1){
         return false;

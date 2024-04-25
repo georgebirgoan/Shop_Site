@@ -13,12 +13,12 @@ const initialState={
     checkout:false
 }
 
-//sum eachItem from cart and total price
+//number of products and total price
 const sumItem=(items)=>{
-    const itemCounter=items.reduce((total,product)=>total + product.quantity,0)
-    const totalPrice=items.reduce((total,product)=>total + product.price * product.quantity,0)
+    const itemsCounter=items.reduce((total,product)=>total + product.quantity,0)
+    const total=items.reduce((total,product)=>total + product.price * product.quantity,0)
     .toFixed(2);
-    return {itemCounter,totalPrice};
+    return {total,itemsCounter};
 }
 
 
@@ -47,15 +47,19 @@ const cartReducer=(state,action)=>{
                 ...sumItem(newSelectedItems)
             }
 
-        case "INCREASE":
-            const IndexI=state.selectedItem.findIndex((item)=>
-            item.id === action.payload.id
-        );
-        state.selectedItem[IndexI].quantity++; 
-        return{
-            ...state,
-            ...sumItem(state.selectedItem),
-        }
+            case "INCREASE":
+                const updatedSelectedItem = state.selectedItem.map((item) => {
+                    if (item.id === action.payload.id) {
+                        return { ...item, quantity: item.quantity + 1 };
+                    }
+                    return item;
+                });
+                return {
+                    ...state,
+                    selectedItem: updatedSelectedItem,
+                    ...sumItem(updatedSelectedItem),
+                };
+            
 
         case "DECREASE":
         const IndexD=state.selectedItem.findIndex((item)=>
@@ -69,14 +73,14 @@ const cartReducer=(state,action)=>{
 
         case "CLEAR":
             return {
-              selectedItems: [],
+              selectedItem: [],
               itemsCounter: 0,
               total: 0,
               checkout: false,
             };
         case "CHECKOUT":
             return {
-            selectedItems: [],
+            selectedItem: [],
             itemsCounter: 0,
             total: 0,
             checkout: true,
@@ -90,9 +94,9 @@ const cartReducer=(state,action)=>{
 }
 
 
-//state cart for entire app
+//state cart for entire app 
   export const CartContext=createContext();
-
+ 
 
   const CartContextProvider=({children})=>{
       const [state,dispatch]=useReducer(cartReducer,initialState);

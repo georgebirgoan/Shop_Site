@@ -12,11 +12,13 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Link } from 'react-router-dom';
 import shopIcon from '../../assets/icons/shop.png'
+import { itemCount } from '../../helper/functions';
+import { CartContext } from '../../context/CartContextProvider';
 
 
 const Navbar = () =>{
   const [anchorElNav, setAnchorElNav] = React.useState(null);
- 
+ const {state}=React.useContext(CartContext);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -205,7 +207,7 @@ const Navbar = () =>{
               <Link  to="/cart">
                 <img src={shopIcon} alt="shop" />
               </Link>
-               <span>2</span>
+               <span>{state.itemsCounter}</span>
             </div>
           </Box>
 
